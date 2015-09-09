@@ -1,12 +1,14 @@
 
-Projeto desenvolvido para a criação de arquivos a partir das de informações extraidas de um Pojo simples.
-Entende-se por Pojo simples (neste senário)
-	- Não extede nenhuma classe;
-	- Contém somente atributos do tipo String, primitivos e/ou seus respectivos Wrappers (int -> Integer, double -> Double, etc);
+Projeto desenvolvido para a criaÃ§Ã£o de arquivos a partir das de informaÃ§Ãµes extraidas de um Pojo simples.
+
+Entende-se por Pojo simples (neste senÃ¡rio)
+
+	- NÃ£o extede nenhuma classe;
+	- ContÃ©m somente atributos do tipo String, primitivos e/ou seus respectivos Wrappers (int -> Integer, double -> Double, etc);
 	
 -= Funcionamento =-
 
-Para a criação de um arquivo, por exmplo ".csv", dos dados extraídos da seguinte entidade:
+Para a criaÃ§Ã£o de um arquivo, por exmplo ".csv", dos dados extraÃ­dos da seguinte entidade:
 
 	public class Person(){
 	
@@ -17,28 +19,28 @@ Para a criação de um arquivo, por exmplo ".csv", dos dados extraídos da seguinte
 		// get and set
 	}
 
-1º passo:
+1Âº passo:
 	
 	Criar uma classe que implementa a interface br.com.dfs.parse.ParseType
 	Ex.: public class CSV implements ParseType { ... }
 	
-2º passo:
+2Âº passo:
 
-	Implementar os métodos definidos pela interface.
+	Implementar os mÃ©todos definidos pela interface.
 	
 	- public String createContent(String[] fields, List<String[]> values)
-		Utilizado para criar o conteúdo, de acordo com a regra definida, do arquivo que será gerado
-		 * fields -> nome dos atributos(válidos) extraídos da entiade;
-		 * values -> valor de cada atributo extraído da entidade
-		 Obs. a ordem do conteúdo dos dois atributos será apresentada de acordo com a ordem declarada na classe.
+		Utilizado para criar o conteÃºdo, de acordo com a regra definida, do arquivo que serÃ¡ gerado
+		 * fields -> nome dos atributos(vÃ¡lidos) extraÃ­dos da entiade;
+		 * values -> valor de cada atributo extraÃ­do da entidade
+		 Obs. a ordem do conteÃºdo dos dois atributos serÃ¡ apresentada de acordo com a ordem declarada na classe.
 	
 	- getExtensionFile() ...
-		Utilizado para recuperar a extenção do aquivo que será criado.
+		Utilizado para recuperar a extenÃ§Ã£o do aquivo que serÃ¡ criado.
 		Ex.: csv
 		
-3º passo
+3Âº passo
 
-	Utilização da classe br.com.dfs.parse.ParseFile para a criação do arquivo.
+	UtilizaÃ§Ã£o da classe br.com.dfs.parse.ParseFile para a criaÃ§Ã£o do arquivo.
 	Ex.: 
 		ParseFile<Person> parseFile = new ParseFile<Person>(new CSV());
 		OutputStream out = parseFile.parse(entity);
@@ -47,29 +49,29 @@ Para a criação de um arquivo, por exmplo ".csv", dos dados extraídos da seguinte
 -= Funcionamento Interno =-
 
 	br.com.dfs.parse.ParseFile
-	Utilizando generic, é definido o tipo de entidade ao qual serão extraidas as informações referente ao(s) nome(s) do(s) atributo(s);
-	No construtor é passado qual o tipo de formatador de conteúdo será utilizado;
-	No método parseFile.parse(T object) é passado objeto criado.
-	Obs. É possível passar um lista de objetos a partir do método de mesmo nome (sobrecarga de método)
+	Utilizando generic, Ã© definido o tipo de entidade ao qual serÃ£o extraidas as informaÃ§Ãµes referente ao(s) nome(s) do(s) atributo(s);
+	No construtor Ã© passado qual o tipo de formatador de conteÃºdo serÃ¡ utilizado;
+	No mÃ©todo parseFile.parse(T object) Ã© passado objeto criado.
+	Obs. Ã‰ possÃ­vel passar um lista de objetos a partir do mÃ©todo de mesmo nome (sobrecarga de mÃ©todo)
 		Ex. parseFile.parse(List<T> object)
 
-	No processamento do método 'parse' é feito uma série de verificações em relação a entidade passada e ao objeto passado (seja único ou uma lista).
-	Quatro exeções, em específico, podem ser geradas caso as seguintes informações estiverem incorretas.
+	No processamento do mÃ©todo 'parse' Ã© feito uma sÃ©rie de verificaÃ§Ãµes em relaÃ§Ã£o a entidade passada e ao objeto passado (seja Ãºnico ou uma lista).
+	Quatro exeÃ§Ãµes, em especÃ­fico, podem ser geradas caso as seguintes informaÃ§Ãµes estiverem incorretas.
 	
 	- HasSuperClassException : caso a entidade informada possua uma super class; 
 		Ex. public class Man extends Person{...}
 	
-	- NotHasAttributes : caso a entidade não possua nenhum atributo;
+	- NotHasAttributes : caso a entidade nÃ£o possua nenhum atributo;
 		Ex. public class Person{  public int getId(){...} }
 	
-	- NotHasValidAttributeType : caso a entidade possua somente atributos não permitidos.
+	- NotHasValidAttributeType : caso a entidade possua somente atributos nÃ£o permitidos.
 		Ex. public class Person{  public String[] list; }
 		
-	- InvalidParameterException : caso a extenção do arquivo não seja informada através do métodos getExtensionFile() definido na interface ParseType
+	- InvalidParameterException : caso a extenÃ§Ã£o do arquivo nÃ£o seja informada atravÃ©s do mÃ©todos getExtensionFile() definido na interface ParseType
 	
-	Obs,: As três primeiras regras são validades na classe br.com.dfs.utils.ValidateClass que faz usso massivo de 'reflection' para consequir extrair as informações da entidade informada e assim efetuar as regras definidas para o senário proposto.
+	Obs,: As trÃªs primeiras regras sÃ£o validades na classe br.com.dfs.utils.ValidateClass que faz usso massivo de 'reflection' para consequir extrair as informaÃ§Ãµes da entidade informada e assim efetuar as regras definidas para o senÃ¡rio proposto.
 			
-	O processamento dos métodos é registrado utilizando o recurso da biblioteca java.util.logging.Logger sendo que uma mensagem é gerada para vários passos do processamento da criação do arquivo.
+	O processamento dos mÃ©todos Ã© registrado utilizando o recurso da biblioteca java.util.logging.Logger sendo que uma mensagem Ã© gerada para vÃ¡rios passos do processamento da criaÃ§Ã£o do arquivo.
 	
 
 	
