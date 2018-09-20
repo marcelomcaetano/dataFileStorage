@@ -69,7 +69,7 @@ Para a criação de um arquivo, por exmplo ".csv", dos dados extraídos da segui
 		
 	- InvalidParameterException : caso a extenção do arquivo não seja informada através do métodos getExtensionFile() definido na interface ParseType
 	
-	Obs,: As três primeiras regras são validades na classe br.com.dfs.utils.ValidateClass que faz usso massivo de 'reflection' para consequir extrair as informações da entidade informada e assim efetuar as regras definidas para o senário proposto.
+	Obs,: As três primeiras regras são validades na classe br.com.dfs.utils.ValidateClass que faz usso massivo de 'reflection' para consequir extrair as informações da entidade informada e assim efetuar as regras definidas para o cenário proposto.
 			
 	O processamento dos métodos é registrado utilizando o recurso da biblioteca java.util.logging.Logger sendo que uma mensagem é gerada para vários passos do processamento da criação do arquivo.
 	
